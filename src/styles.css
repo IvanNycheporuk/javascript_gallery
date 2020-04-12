@@ -1,0 +1,169 @@
+#App {
+    width: 100%;
+    padding: 22px;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* gallery */
+.gallery-container {
+    width: 69%;
+}
+
+.gallery-title {
+    text-align: center;
+}
+
+.gallery-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.gallery-item {
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    margin-right: 13px;
+    margin-bottom: 13px;
+    cursor: pointer;
+    position: relative;
+    border-radius: 13px;
+    padding: 13px;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.gallery-item:after {
+    content: '';
+    display: block;
+    background: rgba(0, 0, 0, 0);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: all 0.3s linear;
+}
+
+.gallery-item:hover:after {
+    background: rgba(0, 0, 0, 0.4);
+}
+
+
+.gallery-img {
+    max-width: 100%;
+    height: 200px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.gallery-star {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    right: 13px;
+    top: 13px;
+    z-index: 2;
+}
+
+.gallery-star * {
+    pointer-events: none;
+}
+
+.gallery-star svg {
+    width: 100%;
+    height: 100%;
+}
+
+.gallery-star path:first-child {
+    fill: transparent;
+}
+
+.gallery-star path:last-child {
+    fill: #000;
+}
+
+.gallery-star:hover path {
+    fill: yellow;
+}
+
+.gallery-star.active path {
+    fill: yellow;
+}
+
+.gallery-star.modal-view {
+    pointer-events: none;
+}
+
+/* modal */
+.gallery-modal {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: none;
+    z-index: 3;
+}
+
+.gallery-modal.show {
+    display: flex;
+}
+
+.modal-wrap {
+    width: 600px;
+    margin: auto;
+    background: #fff;
+    border-radius: 13px;
+    padding: 13px;
+    position: relative;
+}
+
+.modal-info {
+    display: flex;
+    justify-content: space-between;
+}
+
+.movie-title {
+    font-size: 28px;
+}
+
+.img-wrap {
+    width: 40%;
+    height: 220px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.movie-general-info {
+    width: 55%;
+}
+
+.movie-genres span {
+    display: inline-block;
+    padding: 4px;
+    border: 1px solid black;
+    border-radius: 4px;
+    margin-left: 4px;
+}
+
+.close-modal {
+    position: absolute;
+    top: 13px;
+    right: 13px;
+    cursor: pointer;
+}
+
+/* favorite list */
+.favorite-list {
+    width: 30%;
+}
+
+.list-item {
+    display: flex;
+    justify-content: space-between;
+}
