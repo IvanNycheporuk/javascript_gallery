@@ -13,7 +13,7 @@ class FavoriteListItem {
             <span class="remove-favorite-item">&#10006;</span>
         `;
 
-        listItem.querySelector('.remove-favorite-item').addEventListener('click', this.onClickHandler );
+        listItem.querySelector('.remove-favorite-item').addEventListener('click', (e) => {this.onClickHandler(e, this.data.id)} );
 
         return listItem;
     }

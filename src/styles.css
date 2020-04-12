@@ -3,6 +3,7 @@
     padding: 22px;
     display: flex;
     justify-content: space-between;
+    box-sizing: border-box;
 }
 
 /* gallery */
@@ -10,7 +11,7 @@
     width: 69%;
 }
 
-.gallery-title {
+.title {
     text-align: center;
 }
 
@@ -164,6 +165,13 @@
 }
 
 .list-item {
-    display: flex;
-    justify-content: space-between;
+    position: relative;
+    list-style-type: disclosure-closed;
 }
+
+.remove-favorite-item {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+}
+

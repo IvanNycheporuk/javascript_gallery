@@ -12,7 +12,7 @@ class GalleryContainer {
         this.galleryContainer.classList.add('gallery-container');
 
         let title = document.createElement('h2');
-        title.classList.add('gallery-title');
+        title.classList.add('title');
         title.innerText = "Movies Gallery";
 
         this.galleryContainer.appendChild(title);
@@ -27,7 +27,7 @@ class GalleryContainer {
         galleryWrapper.classList.add('gallery-wrapper');
         
         let galleryList = data.map(item => {
-            let galleryItem = new GalleryItem(item, this.onMovieClickHandler, this.onStarClickHandler);
+            let galleryItem = new GalleryItem(item, this.onMovieClickHandler, (e, item) => {this.onStarClickHandler(item)});
             return galleryItem.Render();
         });
 

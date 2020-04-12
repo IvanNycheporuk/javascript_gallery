@@ -2,6 +2,7 @@ import GalleryContainer from './Gallery/GalleryContainer';
 import GalleryModal from './Gallery/GalleryModal';
 import FavoriteStore from './Favorite/FavoriteStore';
 import FavoriteList from './Favorite/FavoriteList';
+//import data from './films.json';
 
 class App {
     constructor(el) {
@@ -9,8 +10,10 @@ class App {
         this.favoriteStore = [];
 
         this.modal = new GalleryModal();
-        this.favoriteStore = new FavoriteStore();
-
+        
+        this.favoriteList = null;
+        this.favoriteStore = new FavoriteStore((data) => {this.favoriteList.Update(data)});
+        
         this.GetData().then(res => {
             this.Init(res);
         })
@@ -40,7 +43,7 @@ class App {
         container.classList.add('container');
 
         let gallery = this.BuildGalleryContainer(data);
-        let favoriteList = this.BuildFavoriteList(this.el);
+        let favoriteList = this.BuildFavoriteList(this.favoriteStore.GetData(), (e, item) => {this.favoriteStore.Remove(item)});
 
         container.innerHTML = gallery;
         
@@ -54,14 +57,13 @@ class App {
         return galleryContainer;
     }
 
-    BuildFavoriteList(el) {
-        let favoriteList = new FavoriteList('test');
-        let test = favoriteList.Render();
+    BuildFavoriteList(data, callback) {
+        this.favoriteList = new FavoriteList(data, callback);
 
-        return test;
+        return this.favoriteList.Build();
     }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-   new App(document.getElementById('App'));
+    new App(document.getElementById('App'));
 });

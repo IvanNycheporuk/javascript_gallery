@@ -32,7 +32,7 @@ class GalleryModal {
         movieFullInfo.classList.add('modal-content');
         
 
-        let galleryStar = new GalleryStar(data.favourite).Render();
+        let galleryStar = new GalleryStar(data).Render();
         galleryStar.classList.add('modal-view');
 
         let actors = this.RenderDetails(data.starring);
