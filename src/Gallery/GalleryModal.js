@@ -8,7 +8,6 @@ class GalleryModal {
     }
 
     Open(e, data) {
-        // what to do with e
         this.SetData(data);
 
         this.el.classList.add('show');
@@ -18,7 +17,6 @@ class GalleryModal {
         let modal = e.target.closest('.gallery-modal');
         modal.querySelector('.modal-content').remove();
         modal.classList.remove('show');
-        //this.el.querySelector('.modal-content').innerHTML = ''; - why this doesnt work???
     }
 
     AddEventListeners() {
@@ -30,14 +28,13 @@ class GalleryModal {
         let modal = this.el;
         let movieFullInfo = document.createElement('div');
         movieFullInfo.classList.add('modal-content');
-        
 
-        let galleryStar = new GalleryStar(data).Render();
+        let galleryStar = new GalleryStar(data.favorite).Render();
         galleryStar.classList.add('modal-view');
 
         let actors = this.RenderDetails(data.starring);
         let genres = this.RenderDetails(data.genres);
-                
+
         movieFullInfo.innerHTML = `
             <div class="modal-info">
                 <div class="img-wrap" style="background-image: url('${data.img}')">
@@ -56,21 +53,13 @@ class GalleryModal {
             </div>       
         `
         modal.querySelector('.modal-wrap').appendChild(movieFullInfo);
-
-        // FIRST CASE
-        // modal.querySelector('.img-wrap').appendChild(galleryStar);
-        // modal.querySelector('.img-wrap').style.backgroundImage = `url('${data.img}')`; 
-        // modal.querySelector('.movie-title').innerHTML = `<b>Title:</b> ${data.name}`;
-        // modal.querySelector('.movie-director').innerHTML = `<b>Director:</b> ${data.director}`;
-        // modal.querySelector('.movie-description').innerHTML = `<b>Description:</b> ${data.description}`;
-        // modal.querySelector('.movie-year').innerHTML = `<b>Year</b>: ${data.year}`;
     }
 
     RenderDetails(details) {
         let detailsList = '';
         details.forEach(detail => {
             let detailItem = document.createElement('span');
-            detailItem.innerText = ` ${detail}`;
+            detailItem.innerText = `${detail}`;
             detailsList += detailItem.outerHTML;
         });
 

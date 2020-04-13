@@ -8,6 +8,22 @@ class FavoriteList {
 
         this.Update = this.Update.bind(this);
     }
+    
+    ClearList() {
+        this.el.querySelector('ul').innerHTML = '';
+    }
+
+    Update(data) {
+        this.ClearList();
+        
+        let listContainer = this.el.querySelector('ul');
+        
+        data.forEach(item => {            
+            let favoriteItem = new FavoriteListItem(item, this.onClickRemoveHandler).Build();
+            
+            listContainer.appendChild(favoriteItem);
+        });
+    }
 
     Build() {
         let element = document.createElement('div');
@@ -20,8 +36,8 @@ class FavoriteList {
 
         if (this.data) {
             this.data.forEach(item => {
-                let favouriteItem = new FavoriteListItem(item, this.onClickRemoveHandler).Build();
-                listContainer.appendChild(favouriteItem);
+                let favoriteItem = new FavoriteListItem(item, this.onClickRemoveHandler).Build();
+                listContainer.appendChild(favoriteItem);
             });
         }
         
@@ -31,22 +47,6 @@ class FavoriteList {
         this.el = element;
         
         return element;
-    }
-
-    ClearList() {
-        this.el.querySelector('ul').innerHTML = '';
-    }
-
-    Update(data) {
-        this.ClearList();
-
-        let listContainer = this.el.querySelector('ul');
-
-        data.forEach(item => {            
-            let favoriteItem = new FavoriteListItem(item, this.onClickRemoveHandler).Build();
-
-            listContainer.appendChild(favoriteItem);
-        });
     }
 }
 

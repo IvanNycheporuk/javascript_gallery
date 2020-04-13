@@ -8,18 +8,31 @@ class App {
     constructor(el) {
         this.el = el;
         this.favoriteStore = [];
-
-        this.modal = new GalleryModal();
-        
+        this.gallery = null;
         this.favoriteList = null;
-        this.favoriteStore = new FavoriteStore((data) => {this.favoriteList.Update(data)});
+        this.data = null;
+        this.modal = new GalleryModal();
+
+        this.favoriteStore = new FavoriteStore((data) => {
+            let items = this.data.filter(item => {
+                return data.indexOf(item.id) !== -1;
+            });
+
+            this.favoriteList.Update(items);
+        });
         
         this.GetData().then(res => {
-            this.Init(res);
-        })
-    }
+            this.data = res;
+            this.DefineFavorites(this.data);
+            this.Init(this.data);
+        });
 
-    GetData(){
+        // setTimeout(() => {
+        //     this.gallery.FilterByGenre('Drama');
+        // }, 1000);
+    }
+    
+    GetData() {
         return new Promise(resolve => {
             fetch('http://my-json-server.typicode.com/moviedb-tech/movies/list')
                 .then(resolve => {
@@ -38,29 +51,36 @@ class App {
         })        
     }
 
-    Init(data) {
-        let container = document.createElement('div');
-        container.classList.add('container');
+    Init(data) {      
+        this.gallery = new GalleryContainer(data, this.modal.Open, (item) => { this.favoriteStore.Toggle(item.id); });
 
-        let gallery = this.BuildGalleryContainer(data);
-        let favoriteList = this.BuildFavoriteList(this.favoriteStore.GetData(), (e, item) => {this.favoriteStore.Remove(item)});
-
-        container.innerHTML = gallery;
+        let favoriteList = this.BuildFavoriteList(
+            (e, id) => {
+                this.gallery.UpdateMovieFavoriteState(id, false);
+                this.favoriteStore.Remove(id);
+            });
         
-        this.el.appendChild(gallery);
+        this.el.appendChild(this.gallery.Build());
         this.el.appendChild(favoriteList);
     }
 
-    BuildGalleryContainer(data) {
-        let galleryContainer = new GalleryContainer(data, this.modal.Open, this.favoriteStore.Add).Build();   
-        
-        return galleryContainer;
-    }
+    BuildFavoriteList(callback) {
+        let favorites = this.favoriteStore.GetData();
+        let items = this.data.filter(item => {
+            return favorites.indexOf(item.id) !== -1;
+        });
 
-    BuildFavoriteList(data, callback) {
-        this.favoriteList = new FavoriteList(data, callback);
+        this.favoriteList = new FavoriteList(items, callback);
 
         return this.favoriteList.Build();
+    }
+
+    DefineFavorites(items) {
+        let favorites = this.favoriteStore.GetData();
+        favorites.forEach(f => {
+            let item = items.find(x => x.id === f);
+            if (item !== null) item.favorite = true;
+        });
     }
 }
 

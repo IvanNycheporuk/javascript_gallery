@@ -5,28 +5,28 @@ class GalleryItem {
         this.data = data;
         this.onMovieClickHandler = onMovieClickHandler;
         this.onStarClickcHandler = onStarClickcHandler;
+        this.el = null;
+
+        let isFavorite = this.data.favorite;
+        this.favoriteStar = new GalleryStar(isFavorite, () => {
+            this.data.favorite = this.favoriteStar.value;
+            this.onStarClickcHandler(this.data);
+        });
     }
 
-    Render() {
-        let item = document.createElement('div');
-        item.classList.add('gallery-item');
-        item.dataset.id = this.data.id;
+    Render(builder) {
+        let item = builder.Build(this.data, this.favoriteStar);
+        item.addEventListener('click', (e) => {
+            this.onMovieClickHandler(e, this.data);
+        });
 
-        let galleryStar = new GalleryStar(this.data, this.onStarClickcHandler);
-
-        item.innerHTML = `
-            <div class="gallery-img" style="background-image: url('${this.data.img}')"></div>
-            <div class="gallery-text">
-                <p>${this.data.name}</p>
-                <p>${this.data.year}</p>
-            </div>           
-        `;    
-
-        item.appendChild(galleryStar.Render());
-        
-        item.addEventListener('click', (e) => {this.onMovieClickHandler(e, this.data)});
-       
+        this.el = item;
         return item;
+    }
+
+    SetFavorite(value) {
+        this.data.favorite = value;
+        this.favoriteStar.SetValue(value);
     }
 }
 

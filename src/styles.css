@@ -15,6 +15,12 @@
     text-align: center;
 }
 
+.gallery-header {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
 .gallery-wrapper {
     display: flex;
     flex-wrap: wrap;
@@ -86,7 +92,7 @@
 }
 
 .gallery-star:hover path {
-    fill: yellow;
+    fill: rgba(0, 255, 255, 0.5);
 }
 
 .gallery-star.active path {
@@ -175,3 +181,6 @@
     right: 4px;
 }
 
+.hidden {
+    display:none;
+}
