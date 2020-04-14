@@ -2,7 +2,6 @@ import GalleryContainer from './Gallery/GalleryContainer';
 import GalleryModal from './Gallery/GalleryModal';
 import FavoriteStore from './Favorite/FavoriteStore';
 import FavoriteList from './Favorite/FavoriteList';
-//import data from './films.json';
 
 class App {
     constructor(el) {
@@ -26,10 +25,6 @@ class App {
             this.DefineFavorites(this.data);
             this.Init(this.data);
         });
-
-        // setTimeout(() => {
-        //     this.gallery.FilterByGenre('Drama');
-        // }, 1000);
     }
     
     GetData() {

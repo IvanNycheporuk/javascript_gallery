@@ -19,11 +19,6 @@ class GalleryModal {
         modal.classList.remove('show');
     }
 
-    AddEventListeners() {
-        // how to add global event on click outside of modal to close it - !!!! 
-        // click on body and via mathces add event
-    }
-
     SetData(data) {
         let modal = this.el;
         let movieFullInfo = document.createElement('div');
